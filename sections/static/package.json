@@ -10,8 +10,7 @@
     "style-loader": "^2.0.0"
   },
   "scripts": {
-    "dev": "webpack --mode development ./src/index.js --output ./dist/main.js",
-    "build": "webpack --mode production ./src/index.js --output ./dist/main.js"
+    "build": "webpack"
   },
   "eslintConfig": {
     "extends": "react-app"
