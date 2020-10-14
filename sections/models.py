@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Categories(models.Model):
-    name = models.CharField(max_length=80, help_text="Enter category name")
+    name = models.CharField(max_length=100, help_text="Enter category name")
 
     def __str__(self):
         return self.name
@@ -14,12 +14,12 @@ class Categories(models.Model):
 
 
 class Sections(models.Model):
-    name = models.CharField(max_length=50, help_text="Enter section name")
+    name = models.CharField(max_length=70, help_text="Enter section name")
     category = models.ForeignKey('Categories', on_delete=models.CASCADE,
                                  null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return '{0} / {1}'.format(self.category, self.name)
 
     class Meta:
         ordering = ['id']
@@ -28,12 +28,12 @@ class Sections(models.Model):
 
 
 class Subsections(models.Model):
-    name = models.CharField(max_length=50, help_text="Enter subsection name")
+    name = models.CharField(max_length=70, help_text="Enter subsection name")
     section = models.ForeignKey('Sections', on_delete=models.CASCADE,
                                 null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return '{0} / {1}'.format(self.section, self.name)
 
     class Meta:
         ordering = ['id']
@@ -42,12 +42,12 @@ class Subsections(models.Model):
 
 
 class Topics(models.Model):
-    name = models.CharField(max_length=50, help_text="Enter topic name")
+    name = models.CharField(max_length=70, help_text="Enter topic name")
     subsection = models.ForeignKey('Subsections', on_delete=models.CASCADE,
                                    null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return '{0} / {1}'.format(self.subsection, self.name)
 
     class Meta:
         ordering = ['id']
@@ -56,12 +56,12 @@ class Topics(models.Model):
 
 
 class Comments(models.Model):
-    text = models.TextField(max_length=300)
+    text = models.TextField(max_length=1000)
     topic = models.ForeignKey('Topics', on_delete=models.CASCADE,
                               null=True, blank=True)
 
     def __str__(self):
-        return self.id
+        return '{0} / {1}'.format(self.topic, self.id)
 
     class Meta:
         ordering = ['id']
