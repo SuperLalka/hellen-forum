@@ -8,27 +8,61 @@ class SubSections extends React.Component {
     constructor(props) {
         super(props);
         this.section_id = this.props.match.params.section_id
-        this.state = [];
-        this.section = {
-            id: 1, text: "Раздел подробнее"
-        }
-        this.subsections = [
-            {id: 1, text: 'Подраздел 1'},
-            {id: 2, text: 'Подраздел 2'},
-            {id: 3, text: 'Подраздел 3'},
-            {id: 4, text: 'Подраздел 4'},
-            {id: 5, text: 'Подраздел 5'},
-        ];
+        this.state = {
+            error: null,
+            isLoaded: false,
+            section: [],
+            subsections: []
+        };
+        this.upload_section();
+        this.upload_subsections();
+    }
+
+    upload_section() {
+        fetch(`/api/section/${this.section_id}`)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        section: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+
+    upload_subsections() {
+        fetch(`/api/subsections?section_id=${this.section_id}`)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        subsections: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
     }
 
     render() {
         return (
             <div className="SubSections__object">
-                <h2 className="SubSections__title">{this.section.text}</h2>
+                <h2 className="SubSections__title">{this.state.section.name}</h2>
                 <ul className="SubSections__list-items">
-                    {this.subsections.map(item => (
-                        <li key={item.id} className="SubSections__item">
-                            <Link to={`/section/subsection/${item.id}`}>{item.text}</Link>
+                    {this.state.subsections.map(subsection => (
+                        <li key={subsection.id} className="SubSections__item">
+                            <Link to={`/section/subsection/${subsection.id}`}>{subsection.name}</Link>
                         </li>
                     ))}
                 </ul>

@@ -7,30 +7,63 @@ class Comments extends React.Component {
 
     constructor(props) {
         super(props);
-        this.topic = {
-            id: 1, text: "Тема подробнее"
-        }
-        this.comments_list = [
-            {id: 1, text: 'Комментарий 1'},
-            {id: 2, text: 'Комментарий 2'},
-            {id: 3, text: 'Комментарий 3'},
-            {id: 4, text: 'Комментарий 4'},
-            {id: 5, text: 'Комментарий 5'},
-            {id: 6, text: 'Комментарий 6'},
-            {id: 7, text: 'Комментарий 7'},
-            {id: 8, text: 'Комментарий 8'},
-        ];
+        this.topic_id = this.props.match.params.topic_id
+        this.state = {
+            error: null,
+            isLoaded: false,
+            topic: [],
+            comments: []
+        };
+        this.upload_topic();
+        this.upload_comments();
+    }
+
+    upload_topic() {
+        fetch(`/api/topic/${this.topic_id}`)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        topic: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+    }
+
+    upload_comments() {
+        fetch(`/api/comments?topic_id=${this.topic_id}`)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        comments: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
     }
 
     render() {
         return (
             <div className="Comments">
-                <h2 className="Comments__title">{this.topic.text}</h2>
+                <h2 className="Comments__title">{this.state.topic.name}</h2>
                 <ul className="Comments__list-items">
-                    {this.comments_list.map(item => (
-                        <li key={item.id} className="Comments__item">
+                    {this.state.comments.map(comment => (
+                        <li key={comment.id} className="Comments__item">
                             <div className="Comments__item-text">
-                                <p>{item.text}</p>
+                                <p>{comment.text}</p>
                             </div>
                         </li>
                     ))}
