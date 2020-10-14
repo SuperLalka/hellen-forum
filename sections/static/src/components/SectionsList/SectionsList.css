@@ -1,0 +1,29 @@
+.SectionList {
+    list-style: none;
+    padding: 0;
+}
+
+.SectionList__object {
+
+}
+
+.SectionList__title {
+    background: url(//www.strategium.ru/forum/uploads/set_resources_2/6ba47b3b9d5f0e1fc1c153af56aeb982_b_maintitle_left.png) no-repeat left,
+                url(//www.strategium.ru/forum/uploads/set_resources_2/6ba47b3b9d5f0e1fc1c153af56aeb982_maintitle_bg.jpg) no-repeat 50% 25%,
+                url(//www.strategium.ru/forum/uploads/set_resources_2/6ba47b3b9d5f0e1fc1c153af56aeb982_b_maintitle_right.png) no-repeat right;
+    color: white;
+    padding: 5px 20px 20px;
+    text-align: center;
+    z-index: 1;
+}
+
+.SectionList__list-items {
+    list-style: none;
+    padding: 0 20px;
+}
+
+.SectionList__item {
+    border: 1px solid;
+    margin: 10px 0;
+    padding: 20px;
+}

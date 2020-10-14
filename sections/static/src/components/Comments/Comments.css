@@ -1,0 +1,16 @@
+.Comments__title {
+    background-color: antiquewhite;
+    border-bottom: 2px dotted;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.Comments__list-items {
+    list-style: none;
+    padding: 0 20px;
+}
+
+.Comments__item {
+    border-bottom: 1px solid;
+}

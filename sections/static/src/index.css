@@ -5,9 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  background-image: url(//i.pinimg.com/originals/5b/fe/84/5bfe8412b4764e1845bb791ce65e2ec6.jpg);
+  background-repeat: round;
+  background-color: lavender;
+  min-height: 100vh;
 }
