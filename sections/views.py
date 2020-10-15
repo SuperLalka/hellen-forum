@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from rest_framework import filters, generics
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Categories, Sections, Subsections, Topics, Comments
 from .serializers import (
@@ -7,7 +9,8 @@ from .serializers import (
     SectionsSerializer,
     SubsectionsSerializer,
     TopicsSerializer,
-    CommentsSerializer
+    CommentsSerializer,
+    RegistrationSerializer
 )
 
 
@@ -82,3 +85,27 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CommentsSerializer
     lookup_field = 'id'
     authentication_classes, permission_classes = [], []
+
+
+# class Login(APIView):
+#     authentication_classes, permission_classes = [], []
+#     serializer_class = LoginSerializer
+#
+#     def post(self, request):
+#         serializer = self.serializer_class(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#
+#         return Response(serializer.data, status=200)
+
+
+class Registration(APIView):
+    authentication_classes, permission_classes = [], []
+    serializer_class = RegistrationSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response({'status': 201})
+
