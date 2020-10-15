@@ -1,0 +1,49 @@
+.Registration__title {
+    background-color: antiquewhite;
+    border-bottom: 2px dotted;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.Registration {
+    text-align: left;
+}
+
+.Registration__form-errors {
+    background: red;
+}
+
+.Registration__form-errors-text {
+    color: white;
+    font-size: 18px;
+    margin: 0;
+    padding: 7px;
+    text-align: center;
+}
+
+.Registration__form {
+    display: flex;
+    flex-flow: column;
+    margin: 20px auto;
+    max-width: 80vw;
+}
+
+.Registration__label {
+    font-size: 20px;
+    letter-spacing: 1px;
+    word-spacing: 5px;
+}
+
+.Registration__input {
+    font-size: 20px;
+    margin: 10px 0;
+    padding: 5px;
+}
+
+.Registration__submit-button {
+    font-size: 18px;
+    margin: 10px auto;
+    padding: 5px 0;
+    width: 50%;
+}

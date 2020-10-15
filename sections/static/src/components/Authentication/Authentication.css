@@ -1,0 +1,40 @@
+.Authentication {
+    padding: 10px;
+    text-align: right;
+}
+
+.Authentication__form {
+    display: inline;
+}
+
+.Authentication__input {
+    margin: 0 10px;
+}
+
+.Authentication__toggle-button,
+.Authentication__submit-button {
+    background: none;
+    border: 0;
+    border-left: 1px solid;
+    cursor: pointer;
+    font-size: 20px;
+    outline: none;
+    padding: 0 10px;
+}
+
+.Authentication__registration-link {
+    background: none;
+    border: 0;
+    border-left: 1px solid;
+    color: inherit;
+    font-size: 20px;
+    outline: none;
+    padding: 0 10px;
+    text-decoration: none;
+}
+
+.Authentication__toggle-button:hover,
+.Authentication__submit-button:hover,
+.Authentication__registration-link:hover {
+    color: red;
+}
