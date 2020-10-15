@@ -1,5 +1,6 @@
 from django.conf.urls import url
-from django.urls import include, path
+from django.urls import include
+from rest_framework.authtoken import views as auth_views
 
 from sections import views
 
@@ -17,8 +18,14 @@ operations = [
     url(r'^comment/(?P<id>\w+)$', views.CommentDetail.as_view(), name='comment_detail'),
 ]
 
+users = [
+    url(r'^registration$', views.Registration.as_view()),
+    url(r'^authorization$', auth_views.obtain_auth_token)
+]
+
 app_name = 'sections'
 urlpatterns = [
     url(r'^$', views.index, name='main-page'),
-    url(r'^api/', include(operations))
+    url(r'^api/', include(operations)),
+    url(r'^users/', include(users))
 ]
