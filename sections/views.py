@@ -92,7 +92,11 @@ class Authorization(ObtainAuthToken):
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
 
-        return Response({'token': token.key, 'username': user.username})
+        return Response({
+            'token': token.key,
+            'username': user.username,
+            'user_id': user.id,
+        })
 
 
 @api_view(['POST'])

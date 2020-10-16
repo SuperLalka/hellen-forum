@@ -48,6 +48,7 @@ class CommentsSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
     text = serializers.CharField(max_length=1000, required=False)
     topic_id = serializers.IntegerField()
+    user_id = serializers.IntegerField()
 
     class Meta:
         model = Comments
