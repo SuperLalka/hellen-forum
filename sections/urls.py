@@ -1,6 +1,5 @@
 from django.conf.urls import url
 from django.urls import include
-from rest_framework.authtoken import views as auth_views
 
 from sections import views
 
@@ -19,8 +18,9 @@ operations = [
 ]
 
 users = [
+    url(r'^authorization$', views.Authorization.as_view()),
+    url(r'^deauthorization$', views.deauthorization),
     url(r'^registration$', views.Registration.as_view()),
-    url(r'^authorization$', auth_views.obtain_auth_token)
 ]
 
 app_name = 'sections'
