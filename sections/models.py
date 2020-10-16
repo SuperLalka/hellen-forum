@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -59,6 +60,8 @@ class Comments(models.Model):
     text = models.TextField(max_length=1000)
     topic = models.ForeignKey('Topics', on_delete=models.CASCADE,
                               null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL,
+                             null=True, blank=True)
 
     def __str__(self):
         return '{0} / {1}'.format(self.topic, self.id)
