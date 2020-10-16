@@ -36,7 +36,10 @@ class Registration extends React.Component {
                 (response) => {
                     if (response.status === 201) {
                         this.setState({
-                            redirect: true
+                            username: '',
+                            email: '',
+                            password: '',
+                            redirect: true,
                         });
                     } else {
                         this.setState({
@@ -57,7 +60,7 @@ class Registration extends React.Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect to="/" />
+            return <Redirect to="/"/>
         } else {
             return (
                 <div className="Registration">

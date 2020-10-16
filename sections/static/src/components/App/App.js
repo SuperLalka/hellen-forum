@@ -19,22 +19,13 @@ import {
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            token: null,
-        };
-    }
-
-    isAuthorized(token) {
-        this.setState({
-            token: token
-        });
     }
 
     render() {
         return (
             <Router>
                 <div className="App">
-                    <Authentication isAuthorized={(token) => this.isAuthorized(token)} />
+                    <Authentication />
                     <Switch>
                         <Route path="/registration" component={Registration}/>
                         <Route path="/section/subsection/topics/:topic_id" component={Comments}/>

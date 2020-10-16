@@ -62,7 +62,7 @@ class SectionsList extends React.Component {
                     {this.state.sections.map(section => (section.category === category.id) ?
                         <li key={section.id} className="SectionList__item">
                             <Link to={{pathname: `/section/${section.id}`}}>{section.name}</Link>
-                        </li> : "")}
+                        </li> : null )}
                 </ul>
             </li>
         )

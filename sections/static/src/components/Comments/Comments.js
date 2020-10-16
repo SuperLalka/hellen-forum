@@ -19,7 +19,12 @@ class Comments extends React.Component {
     }
 
     upload_topic() {
-        fetch(`/api/topic/${this.topic_id}`)
+        fetch(`/api/topic/${this.topic_id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            }
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -37,7 +42,12 @@ class Comments extends React.Component {
     }
 
     upload_comments() {
-        fetch(`/api/comments?topic_id=${this.topic_id}`)
+        fetch(`/api/comments?topic_id=${this.topic_id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            }
+        })
             .then(res => res.json())
             .then(
                 (result) => {

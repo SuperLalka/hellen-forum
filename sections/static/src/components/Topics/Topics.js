@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import css from './Topics.css';
 
 
@@ -19,7 +19,12 @@ class Topics extends React.Component {
     }
 
     upload_subsection() {
-        fetch(`/api/subsection/${this.subsection_id}`)
+        fetch(`/api/subsection/${this.subsection_id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            }
+        })
             .then(res => res.json())
             .then(
                 (result) => {
@@ -37,7 +42,12 @@ class Topics extends React.Component {
     }
 
     upload_topics() {
-        fetch(`/api/topics?subsection_id=${this.subsection_id}`)
+        fetch(`/api/topics?subsection_id=${this.subsection_id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            }
+        })
             .then(res => res.json())
             .then(
                 (result) => {
