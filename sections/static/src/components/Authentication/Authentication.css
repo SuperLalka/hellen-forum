@@ -1,10 +1,22 @@
 .Authentication {
+    background: url(//steamuserimages-a.akamaihd.net/ugc/535147145293162318/CBC53C04E4AE109696270F09D8FDD06CA5F9802F/) no-repeat 10%;
+    background-size: contain;
+    height: 120px;
     padding: 10px;
     text-align: right;
 }
 
+.Authentication__container {
+    align-items: baseline;
+    display: flex;
+    flex-flow: wrap-reverse;
+    height: 100%;
+    justify-content: flex-end;
+}
+
 .Authentication__form {
     display: inline;
+    flex-basis: 100%;
 }
 
 .Authentication__input {
@@ -12,7 +24,8 @@
 }
 
 .Authentication__toggle-button,
-.Authentication__submit-button {
+.Authentication__submit-button,
+.Authentication__deauth-button {
     background: none;
     border: 0;
     border-left: 1px solid;
@@ -35,6 +48,7 @@
 
 .Authentication__toggle-button:hover,
 .Authentication__submit-button:hover,
+.Authentication__deauth-button:hover,
 .Authentication__registration-link:hover {
     color: red;
 }

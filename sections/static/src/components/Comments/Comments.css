@@ -1,3 +1,7 @@
+.Comments {
+
+}
+
 .Comments__title {
     background-color: antiquewhite;
     border-bottom: 2px dotted;
@@ -13,4 +17,47 @@
 
 .Comments__item {
     border-bottom: 1px solid;
+}
+
+.Comments__form {
+    background-color: gainsboro;
+    border: 5px solid white;
+    border-top: none;
+    display: flex;
+    flex-flow: column;
+    margin: 0 auto 10px;
+    padding: 0 20px 10px;
+    width: 70vw;
+}
+
+.Comments__form-title {
+    background-color: gainsboro;
+    border: 5px solid white;
+    border-bottom: none;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 10px auto 0;
+    padding: 10px 20px;
+    text-align: center;
+    width: 70vw;
+}
+
+.Comments__form-title_open {
+    border-bottom: 5px solid white;
+}
+
+.Comments__input_textarea {
+    font-size: 16px;
+    margin: 10px 0;
+    max-height: 200px;
+    min-height: 100px;
+    padding: 10px;
+    resize: vertical;
+}
+
+.Comments__submit-button {
+    font-size: 15px;
+    margin-left: auto;
+    padding: 5px;
+    width: 20vw;
 }
