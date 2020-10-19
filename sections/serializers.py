@@ -36,8 +36,10 @@ class SubsectionsSerializer(serializers.ModelSerializer):
 
 class TopicsSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(required=False)
+    text = serializers.CharField(max_length=1000, required=False)
     name = serializers.CharField(max_length=70)
     subsection_id = serializers.IntegerField()
+    user_id = serializers.IntegerField()
 
     class Meta:
         model = Topics
