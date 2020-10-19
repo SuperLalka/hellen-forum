@@ -44,8 +44,11 @@ class Subsections(models.Model):
 
 class Topics(models.Model):
     name = models.CharField(max_length=70, help_text="Enter topic name")
+    text = models.TextField(max_length=1000, null=True, blank=True)
     subsection = models.ForeignKey('Subsections', on_delete=models.CASCADE,
                                    null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL,
+                             null=True, blank=True)
 
     def __str__(self):
         return '{0} / {1}'.format(self.subsection, self.name)
