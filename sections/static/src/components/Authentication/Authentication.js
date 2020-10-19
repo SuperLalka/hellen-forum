@@ -78,13 +78,13 @@ class Authentication extends React.Component {
     render() {
         return (
             <div className="Authentication">
+                <Link to={"/"} className="Authentication__logo-block"/>
                 {localStorage.getItem('username')
                     ? <div className="Authentication__container">
                         <p className="Authentication__user-info">Сейчас вы авторизованы
                             как {localStorage['username']}</p>
-                        <button className="Authentication__deauth-button" type="button"
-                                onClick={() => this.removeAuthentication()}>Выйти из профиля
-                        </button>
+                        <Link to={"/"} className="Authentication__deauth-link"
+                              onClick={() => this.removeAuthentication()}>Выйти из профиля</Link>
                     </div>
                     : <div className="Authentication__container">
                         {this.state.isOpen && (

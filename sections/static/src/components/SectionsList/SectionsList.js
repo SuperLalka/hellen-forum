@@ -9,7 +9,6 @@ class SectionsList extends React.Component {
         super(props);
         this.state = {
             error: null,
-            isLoaded: false,
             categories: [],
             sections: []
         };
@@ -26,12 +25,6 @@ class SectionsList extends React.Component {
                         categories: result
                     });
                 },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
             )
     }
 
@@ -41,16 +34,9 @@ class SectionsList extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        isLoaded: true,
                         sections: result
                     });
                 },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
             )
     }
 
@@ -71,8 +57,7 @@ class SectionsList extends React.Component {
     render() {
         return (
             <ol className="SectionList">
-                { this.state.isLoaded ? this.state.categories.map(category =>
-                    this.get_section(category)) : ""}
+                { this.state.categories.map(category => this.get_section(category)) }
             </ol>
         );
     }

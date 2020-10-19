@@ -9,8 +9,6 @@ class Comments extends React.Component {
         super(props);
         this.topic_id = this.props.match.params.topic_id
         this.state = {
-            error: null,
-            isLoaded: false,
             openCommentInput: false,
             topic: [],
             comments: []
@@ -33,12 +31,6 @@ class Comments extends React.Component {
                         topic: result
                     });
                 },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
             )
     }
 
@@ -53,16 +45,9 @@ class Comments extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        isLoaded: true,
                         comments: result
                     });
                 },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
             )
     }
 
@@ -93,7 +78,8 @@ class Comments extends React.Component {
                     this.setState({
                         comment: '',
                     });
-                    this.upload_comments()
+                    this.upload_comments();
+                    this.commentFormToggle();
                 }
             )
     }
@@ -107,38 +93,56 @@ class Comments extends React.Component {
     render() {
         return (
             <div className="Comments">
-                <h2 className="Comments__title">{this.state.topic.name}</h2>
+                <h2 className="Comments__topic-title">{this.state.topic.name}</h2>
+                <div className="Comments__topic-text">
+                    {draw_comments(this.state.topic.user, this.state.topic.text)}
+                </div>
                 <ul className="Comments__list-items">
                     {this.state.comments.map(comment => (
                         <li key={comment.id} className="Comments__item">
-                            <div className="Comments__item-text">
-                                <p>{comment.text}</p>
-                            </div>
+                            {draw_comments(comment.user, comment.text)}
                         </li>
                     ))}
                 </ul>
-                <h3 className={this.state.openCommentInput
-                    ? "Comments__form-title"
-                    : "Comments__form-title Comments__form-title_open"}
-                    onClick={() => this.commentFormToggle()}>Присоединиться к обсуждению</h3>
-                {this.state.openCommentInput ?
-                    <form className="Comments__form" id="comments_form"
-                          onSubmit={(event) => this.commentsFormSubmit(event)}>
-                        <label htmlFor="password_field">Текст сообщения</label>
-                        <textarea name="comment"
-                                  className="Comments__input_textarea"
-                                  id="comment_field"
-                                  value={this.state.comment}
-                                  onChange={(event) => this.commentsFormChange(event)}
-                                  placeholder="Текст до 1000 знаков"/>
-                        <button className="Comments__submit-button" type="submit"
-                                form="comments_form">Опубликовать сообщение</button>
-                    </form>
-                    : null}
-                <Link to="/">Вернуться на главную</Link>
+                <div className="Comments__create-comment-block">
+                    {this.state.openCommentInput ?
+                        <form className="Comments__form" id="comments_form"
+                              onSubmit={(event) => this.commentsFormSubmit(event)}>
+                            <label htmlFor="password_field">Текст сообщения</label>
+                            <textarea name="comment"
+                                      className="Comments__input_textarea"
+                                      id="comment_field"
+                                      value={this.state.comment}
+                                      onChange={(event) => this.commentsFormChange(event)}
+                                      placeholder="Текст до 1000 знаков"/>
+                            <button className="Comments__submit-button" type="submit"
+                                    form="comments_form">Опубликовать сообщение</button>
+                        </form>
+                        : null}
+                    <h3 className={this.state.openCommentInput
+                        ? "Comments__form-title Comments__form-title_open"
+                        : "Comments__form-title"}
+                        onClick={() => this.commentFormToggle()}>
+                        {this.state.openCommentInput
+                        ? 'Скрыть'
+                        : 'Присоединиться к обсуждению'}</h3>
+                </div>
             </div>
         );
     }
+}
+
+function draw_comments(user, text) {
+    return (
+        <div className="Comments__item-text">
+            <div className="Comments__item-author-block">
+                {user}
+            </div>
+            <div className="Comments__item-text-block">
+                {text}
+            </div>
+        </div>
+    );
 }
 
 export default Comments;

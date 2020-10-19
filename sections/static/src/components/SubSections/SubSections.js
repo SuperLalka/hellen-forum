@@ -10,7 +10,6 @@ class SubSections extends React.Component {
         this.section_id = this.props.match.params.section_id
         this.state = {
             error: null,
-            isLoaded: false,
             section: [],
             subsections: []
         };
@@ -27,12 +26,6 @@ class SubSections extends React.Component {
                         section: result
                     });
                 },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
             )
     }
 
@@ -42,16 +35,9 @@ class SubSections extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        isLoaded: true,
                         subsections: result
                     });
                 },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
             )
     }
 
