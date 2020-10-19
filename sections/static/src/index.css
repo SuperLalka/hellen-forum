@@ -2,7 +2,6 @@
 
 
 body {
-    margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -11,6 +10,8 @@ body {
     background-image: url(//i.pinimg.com/originals/5b/fe/84/5bfe8412b4764e1845bb791ce65e2ec6.jpg);
     background-repeat: round;
     background-color: lavender;
+    margin: auto;
+    max-width: 1600px;
     min-height: 100vh;
 }
 

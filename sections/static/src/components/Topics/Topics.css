@@ -1,5 +1,7 @@
 .Topics__object {
-
+    display: flex;
+    flex-flow: column;
+    min-height: calc(100vh - 154px);
 }
 
 .Topics__title {
@@ -28,4 +30,72 @@
     background-color: antiquewhite;
     box-shadow: 0 1px 4px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.12), 0 1px 3px rgba(0,0,0,.14);
     transform: translateY(-2px);
+}
+
+.Topics__underlist-block {
+    background-color: lightsteelblue;
+    border-top: 2px solid;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    margin-top: auto;
+    min-height: 40px;
+}
+
+.Topics__create-object-form {
+    display: flex;
+    flex-flow: column;
+    margin: auto;
+    min-height: 200px;
+    width: 80%;
+}
+
+.Topics__input {
+    margin: 10px 0;
+    padding: 5px;
+    text-indent: 10px;
+}
+
+.Topics__input_textarea {
+    min-height: 120px;
+    padding: 5px;
+    text-indent: 10px;
+}
+
+.Topics__buttons-block {
+    display: flex;
+    margin: auto;
+    width: 50%;
+}
+
+.Topics__submit-button,
+.Topics__cancelling-button {
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    flex: 1;
+    font-size: 20px;
+    letter-spacing: 4px;
+    margin: 5px;
+    padding: 5px;
+    transition: .5s;
+}
+
+.Topics__submit-button:hover {
+    background-color: greenyellow;
+    flex: 2;
+}
+
+.Topics__cancelling-button:hover {
+    background-color: red;
+    flex: 2;
+}
+
+.Topics__create-object-button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-size: 18px;
+    outline: none;
+    width: 200px;
 }

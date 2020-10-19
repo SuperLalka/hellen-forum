@@ -1,14 +1,31 @@
 .Authentication {
-    background: url(//steamuserimages-a.akamaihd.net/ugc/535147145293162318/CBC53C04E4AE109696270F09D8FDD06CA5F9802F/) no-repeat 10%;
-    background-size: contain;
-    height: 120px;
+    height: 130px;
+    display: flex;
     padding: 10px;
     text-align: right;
+}
+
+.Authentication__logo-block {
+    background: url(//steamuserimages-a.akamaihd.net/ugc/535147145293162318/CBC53C04E4AE109696270F09D8FDD06CA5F9802F/) no-repeat;
+    background-size: contain;
+    height: 170px;
+    margin: 0 2vw;
+    position: relative;
+    top: -15px;
+    width: 400px;
+}
+
+.Authentication__logo-block:hover {
+    background: url(//steamuserimages-a.akamaihd.net/ugc/535147145293162318/CBC53C04E4AE109696270F09D8FDD06CA5F9802F/) no-repeat,
+                radial-gradient(circle, rgba(255, 255, 255, 1) 40%, rgba(0, 0, 0, 0) 70%);
+    background-size: contain;
+    z-index: 2;
 }
 
 .Authentication__container {
     align-items: baseline;
     display: flex;
+    flex: 1;
     flex-flow: wrap-reverse;
     height: 100%;
     justify-content: flex-end;
@@ -24,8 +41,7 @@
 }
 
 .Authentication__toggle-button,
-.Authentication__submit-button,
-.Authentication__deauth-button {
+.Authentication__submit-button {
     background: none;
     border: 0;
     border-left: 1px solid;
@@ -35,20 +51,23 @@
     padding: 0 10px;
 }
 
+.Authentication__deauth-link,
 .Authentication__registration-link {
     background: none;
     border: 0;
     border-left: 1px solid;
     color: inherit;
     font-size: 20px;
+    height: auto;
     outline: none;
     padding: 0 10px;
     text-decoration: none;
+    text-indent: 0;
 }
 
 .Authentication__toggle-button:hover,
 .Authentication__submit-button:hover,
-.Authentication__deauth-button:hover,
+.Authentication__deauth-link:hover,
 .Authentication__registration-link:hover {
     color: red;
 }
