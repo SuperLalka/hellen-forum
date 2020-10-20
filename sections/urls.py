@@ -15,6 +15,7 @@ operations = [
     url(r'^topic/(?P<id>\w+)$', views.TopicDetail.as_view(), name='topic_detail'),
     url(r'^comments', views.CommentsList.as_view(), name='comments_list'),
     url(r'^comment/(?P<id>\w+)$', views.CommentDetail.as_view(), name='comment_detail'),
+    url(r'^user/(?P<id>\w+)$', views.UserDetail.as_view(), name='user_detail'),
 ]
 
 users = [

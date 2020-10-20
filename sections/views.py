@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from rest_framework import filters, generics
 from rest_framework.authtoken.models import Token
@@ -14,11 +15,12 @@ from .serializers import (
     SubsectionsSerializer,
     TopicsSerializer,
     CommentsSerializer,
+    UsersSerializer,
     RegistrationSerializer
 )
 
 
-def index(request, **kwargs):
+def index(request):
     return render(request, 'index.html')
 
 
@@ -67,7 +69,6 @@ class TopicDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Topics.objects.all()
     serializer_class = TopicsSerializer
     lookup_field = 'id'
-    permission_classes = [IsAuthenticated]
 
 
 class CommentsList(generics.ListCreateAPIView):
@@ -82,6 +83,12 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CommentsSerializer
     lookup_field = 'id'
     permission_classes = [IsAuthenticated]
+
+
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UsersSerializer
+    lookup_field = 'id'
 
 
 class Authorization(ObtainAuthToken):
@@ -115,4 +122,11 @@ class Registration(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response({'status': 201})
+        user = serializer.instance
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response({
+            'token': token.key,
+            'username': user.username,
+            'user_id': user.id,
+        }, status=201)

@@ -1,4 +1,3 @@
-from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
@@ -57,11 +56,22 @@ class CommentsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class UsersSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+    username = serializers.CharField(max_length=150, required=False)
+    is_staff = serializers.BooleanField(required=False)
+    last_login = serializers.DateTimeField(required=False)
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'is_staff']
+
+
 class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'password',)
+        fields = ['email', 'username', 'password']
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
