@@ -5,6 +5,23 @@
     text-align: right;
 }
 
+.Authentication__form-errors {
+    background-color: red;
+    left: 0;
+    padding: 10px;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+}
+
+.Authentication__form-errors-text {
+    color: white;
+    cursor: default;
+    font-size: 25px;
+    margin: 0;
+    text-align: center;
+}
+
 .Authentication__logo-block {
     background: url(//steamuserimages-a.akamaihd.net/ugc/535147145293162318/CBC53C04E4AE109696270F09D8FDD06CA5F9802F/) no-repeat;
     background-size: contain;
