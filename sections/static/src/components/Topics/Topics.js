@@ -22,9 +22,6 @@ class Topics extends React.Component {
     upload_subsection() {
         fetch(`/api/subsection/${this.subsection_id}`, {
             method: 'GET',
-            headers: {
-                'Authorization': localStorage.getItem('token'),
-            }
         })
             .then(res => res.json())
             .then(
@@ -39,9 +36,6 @@ class Topics extends React.Component {
     upload_topics() {
         fetch(`/api/topics?subsection_id=${this.subsection_id}`, {
             method: 'GET',
-            headers: {
-                'Authorization': localStorage.getItem('token'),
-            }
         })
             .then(res => res.json())
             .then(
@@ -107,30 +101,30 @@ class Topics extends React.Component {
                 </ul>
                 {localStorage.getItem('username') && (
                     <div className="Topics__underlist-block">
-                        {this.state.openCreateInput ?
-                        <form className="Topics__create-object-form" id="create-topic_form"
-                              onSubmit={(event) => this.topicCreateFormSubmit(event)}>
-                            <input name="topic_name"
-                                   className="Topics__input"
-                                   id="topicname_field"
-                                   type="text"
-                                   value={this.state.topic_name}
-                                   onChange={(event) => this.topicCreateFormChange(event)}
-                                   placeholder="Название темы"/>
-                            <textarea name="topic_text"
-                                      className="Topics__input_textarea"
-                                      id="topictext_field"
-                                      value={this.state.topic_text}
-                                      onChange={(event) => this.topicCreateFormChange(event)}
-                                      placeholder="Текст до 1000 знаков"/>
-                            <div className="Topics__buttons-block">
-                                <button className="Topics__submit-button" type="submit">Создать</button>
-                                <button className="Topics__cancelling-button" type="button"
-                                        onClick={() => this.topicCreateFormToggle()}>Отмена</button>
-                            </div>
-                        </form>
-                        : <button className="Topics__create-object-button" type="button"
-                                onClick={() => this.topicCreateFormToggle()}>Создать новую тему</button>}
+                        {this.state.openCreateInput
+                            ? <form className="Topics__create-object-form" id="create-topic_form"
+                                    onSubmit={(event) => this.topicCreateFormSubmit(event)}>
+                                <input name="topic_name"
+                                       className="Topics__input"
+                                       id="topicname_field"
+                                       type="text"
+                                       value={this.state.topic_name}
+                                       onChange={(event) => this.topicCreateFormChange(event)}
+                                       placeholder="Название темы"/>
+                                <textarea name="topic_text"
+                                          className="Topics__input_textarea"
+                                          id="topictext_field"
+                                          value={this.state.topic_text}
+                                          onChange={(event) => this.topicCreateFormChange(event)}
+                                          placeholder="Текст до 1000 знаков"/>
+                                <div className="Topics__buttons-block">
+                                    <button className="Topics__submit-button" type="submit">Создать</button>
+                                    <button className="Topics__cancelling-button" type="button"
+                                            onClick={() => this.topicCreateFormToggle()}>Отмена</button>
+                                </div>
+                            </form>
+                            : <button className="Topics__create-object-button" type="button"
+                                      onClick={() => this.topicCreateFormToggle()}>Создать новую тему</button>}
                     </div>
                 )}
             </div>

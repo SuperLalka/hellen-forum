@@ -16,7 +16,7 @@ class Registration extends React.Component {
         };
     }
 
-    regFormSubmit(event) {
+    async regFormSubmit(event) {
         event.preventDefault();
         let user_info = {
             username: this.state.username,
@@ -24,30 +24,37 @@ class Registration extends React.Component {
             password: this.state.password
         };
 
-        fetch("/users/registration", {
+        let response = await fetch("/users/registration", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify(user_info)
         })
-            .then(res => res.json())
-            .then(
-                (response) => {
-                    if (response.status === 201) {
-                        this.setState({
-                            username: '',
-                            email: '',
-                            password: '',
-                            redirect: true,
-                        });
-                    } else {
-                        this.setState({
-                            errors: response
-                        });
-                    }
-                }
-            )
+
+        if (response.ok) {
+            let result = await response.json();
+
+            localStorage.setItem('token', 'Token ' + result.token);
+            localStorage.setItem('username', result.username);
+            localStorage.setItem('user_id', result.user_id);
+
+            this.setState({
+                username: '',
+                email: '',
+                password: '',
+                redirect: true,
+            });
+        } else {
+            this.setState({
+                errors: await response.json(),
+            });
+            setTimeout(() => {
+                this.setState({
+                    errors: null,
+                })
+            }, 5000);
+        }
     }
 
     regFormChange(event) {

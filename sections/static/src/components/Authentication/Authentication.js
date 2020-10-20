@@ -9,6 +9,7 @@ class Authentication extends React.Component {
         super(props);
         this.state = {
             isOpen: false,
+            errors: null,
         };
     }
 
@@ -18,33 +19,43 @@ class Authentication extends React.Component {
         }));
     }
 
-    authFormSubmit(event) {
+    async authFormSubmit(event) {
         event.preventDefault();
         let user_info = {
             username: this.state.username,
             password: this.state.password
         };
 
-        fetch("/users/authorization", {
+        let response = await fetch("/users/authorization", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify(user_info)
         })
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    localStorage.setItem('token', 'Token ' + result.token);
-                    localStorage.setItem('username', result.username);
-                    localStorage.setItem('user_id', result.user_id);
-                    this.setState({
-                        isOpen: false,
-                        username: '',
-                        password: '',
-                    });
-                }
-            )
+
+        if (response.ok) {
+            let result = await response.json();
+
+            localStorage.setItem('token', 'Token ' + result.token);
+            localStorage.setItem('username', result.username);
+            localStorage.setItem('user_id', result.user_id);
+
+            this.setState({
+                isOpen: false,
+                username: '',
+                password: '',
+            });
+        } else {
+            this.setState({
+                errors: await response.json(),
+            });
+            setTimeout(() => {
+                this.setState({
+                    errors: null,
+                })
+            }, 3000);
+        }
     }
 
     authFormChange(event) {
@@ -78,6 +89,13 @@ class Authentication extends React.Component {
     render() {
         return (
             <div className="Authentication">
+                {this.state.errors && (
+                        <div className="Authentication__form-errors">
+                            {Object.values(this.state.errors).map((text) => (
+                                <p className="Authentication__form-errors-text">{text}</p>
+                            ))}
+                        </div>
+                    )}
                 <Link to={"/"} className="Authentication__logo-block"/>
                 {localStorage.getItem('username')
                     ? <div className="Authentication__container">

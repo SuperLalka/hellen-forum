@@ -1,6 +1,5 @@
 import React from 'react';
 import css from './Comments.css';
-import {Link} from "react-router-dom";
 
 
 class Comments extends React.Component {
@@ -18,12 +17,7 @@ class Comments extends React.Component {
     }
 
     upload_topic() {
-        fetch(`/api/topic/${this.topic_id}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': localStorage.getItem('token'),
-            }
-        })
+        fetch(`/api/topic/${this.topic_id}`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -34,21 +28,25 @@ class Comments extends React.Component {
             )
     }
 
-    upload_comments() {
-        fetch(`/api/comments?topic_id=${this.topic_id}`, {
+    async upload_comments() {
+        let response = await fetch(`/api/comments?topic_id=${this.topic_id}`, {
             method: 'GET',
             headers: {
                 'Authorization': localStorage.getItem('token'),
             }
         })
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        comments: result
-                    });
-                },
-            )
+
+        if (response.ok) {
+            let result = await response.json();
+
+            this.setState({
+                comments: result
+            });
+        } else {
+            this.setState({
+                comments: false
+            });
+        }
     }
 
     commentsFormChange(event) {
@@ -97,46 +95,53 @@ class Comments extends React.Component {
                 <div className="Comments__topic-text">
                     {draw_comments(this.state.topic.user, this.state.topic.text)}
                 </div>
-                <ul className="Comments__list-items">
-                    {this.state.comments.map(comment => (
-                        <li key={comment.id} className="Comments__item">
-                            {draw_comments(comment.user, comment.text)}
-                        </li>
-                    ))}
-                </ul>
-                <div className="Comments__create-comment-block">
-                    {this.state.openCommentInput ?
-                        <form className="Comments__form" id="comments_form"
-                              onSubmit={(event) => this.commentsFormSubmit(event)}>
-                            <label htmlFor="password_field">Текст сообщения</label>
-                            <textarea name="comment"
-                                      className="Comments__input_textarea"
-                                      id="comment_field"
-                                      value={this.state.comment}
-                                      onChange={(event) => this.commentsFormChange(event)}
-                                      placeholder="Текст до 1000 знаков"/>
-                            <button className="Comments__submit-button" type="submit"
-                                    form="comments_form">Опубликовать сообщение</button>
-                        </form>
-                        : null}
-                    <h3 className={this.state.openCommentInput
-                        ? "Comments__form-title Comments__form-title_open"
-                        : "Comments__form-title"}
-                        onClick={() => this.commentFormToggle()}>
-                        {this.state.openCommentInput
-                        ? 'Скрыть'
-                        : 'Присоединиться к обсуждению'}</h3>
-                </div>
+                {this.state.comments
+                    ? <ul className="Comments__list-items">
+                        {this.state.comments.map(comment => (
+                            <li key={comment.id} className="Comments__item">
+                                {draw_comments(comment.user, comment.text)}
+                            </li>
+                        ))}
+                    </ul>
+                    : <div className="Comments__unauthorized-error">
+                        Комментарии скрыты от неавторизованных пользователей
+                    </div>
+                }
+                {localStorage.getItem('username') && (
+                    <div className="Comments__create-comment-block">
+                        {this.state.openCommentInput ?
+                            <form className="Comments__form" id="comments_form"
+                                  onSubmit={(event) => this.commentsFormSubmit(event)}>
+                                <label htmlFor="password_field">Текст сообщения</label>
+                                <textarea name="comment"
+                                          className="Comments__input_textarea"
+                                          id="comment_field"
+                                          value={this.state.comment}
+                                          onChange={(event) => this.commentsFormChange(event)}
+                                          placeholder="Текст до 1000 знаков"/>
+                                <button className="Comments__submit-button" type="submit"
+                                        form="comments_form">Опубликовать сообщение</button>
+                            </form>
+                            : null}
+                        <h3 className={this.state.openCommentInput
+                            ? "Comments__form-title Comments__form-title_open"
+                            : "Comments__form-title"}
+                            onClick={() => this.commentFormToggle()}>
+                            {this.state.openCommentInput
+                                ? 'Скрыть'
+                                : 'Присоединиться к обсуждению'}</h3>
+                    </div>
+                )}
             </div>
         );
     }
 }
 
-function draw_comments(user, text) {
+function draw_comments(user_id, text) {
     return (
         <div className="Comments__item-text">
             <div className="Comments__item-author-block">
-                {user}
+                {user_id}
             </div>
             <div className="Comments__item-text-block">
                 {text}
