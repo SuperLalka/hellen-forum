@@ -1,0 +1,68 @@
+.Topics__underlist-block {
+    align-items: center;
+    background-color: lightsteelblue;
+    border: 5px solid white;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    margin-top: auto;
+    min-height: 40px;
+}
+
+.Topics__create-topic-form {
+    display: flex;
+    flex-flow: column;
+    margin: auto;
+    min-height: 200px;
+    width: 80%;
+}
+
+.Topics__input {
+    margin: 10px 0;
+    padding: 5px;
+    text-indent: 10px;
+}
+
+.Topics__input_textarea {
+    min-height: 120px;
+    padding: 5px;
+    text-indent: 10px;
+}
+
+.Topics__buttons-block {
+    display: flex;
+    margin: auto;
+    width: 50%;
+}
+
+.Topics__submit-button,
+.Topics__cancelling-button {
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    flex: 1;
+    font-size: 20px;
+    letter-spacing: 4px;
+    margin: 5px;
+    padding: 5px;
+    transition: .5s;
+}
+
+.Topics__submit-button:hover {
+    background-color: greenyellow;
+    flex: 2;
+}
+
+.Topics__cancelling-button:hover {
+    background-color: red;
+    flex: 2;
+}
+
+.Topics__create-topic-button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-size: 26px;
+    outline: none;
+    width: 100%;
+}

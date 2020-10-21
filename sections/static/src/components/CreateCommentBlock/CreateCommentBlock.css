@@ -1,0 +1,48 @@
+.Comments__create-comment-block {
+    margin-top: auto;
+}
+
+.Comments__form {
+    background-color: lightsteelblue;
+    border: 5px solid white;
+    border-bottom: none;
+    display: flex;
+    flex-flow: column;
+    margin: 10px auto 0;
+    padding: 10px 20px;
+    width: 80%;
+}
+
+.Comments__form-title {
+    background-color: lightsteelblue;
+    border: 5px solid white;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    text-align: center;
+    width: 80%;
+}
+
+.Comments__form-title_open {
+    background-color: black;
+    border-bottom: 0;
+    border-top: 0;
+    color: white;
+}
+
+.Comments__input_textarea {
+    font-size: 16px;
+    margin: 10px 0;
+    max-height: 200px;
+    min-height: 100px;
+    padding: 10px;
+    resize: vertical;
+}
+
+.Comments__submit-button {
+    font-size: 15px;
+    margin-left: auto;
+    padding: 5px;
+    width: 20vw;
+}
