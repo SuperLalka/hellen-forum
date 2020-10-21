@@ -27,7 +27,7 @@ class App extends React.Component {
                 <div className="App">
                     <Authentication />
                     <Switch>
-                        <Route path="/registration" component={Registration}/>
+                        <Route path="/registration"  render={()=> <Registration user_profile={this.state.profile}/>}/>
                         <Route path="/section/subsection/topics/:topic_id" component={Comments}/>
                         <Route path="/section/subsection/:subsection_id" component={Topics}/>
                         <Route path="/section/:section_id" component={SubSections}/>

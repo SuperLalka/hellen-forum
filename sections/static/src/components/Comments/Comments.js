@@ -1,4 +1,7 @@
 import React from 'react';
+
+import CreateCommentBlock from "../CreateCommentBlock/CreateCommentBlock";
+
 import css from './Comments.css';
 
 
@@ -8,12 +11,10 @@ class Comments extends React.Component {
         super(props);
         this.topic_id = this.props.match.params.topic_id
         this.state = {
-            openCommentInput: false,
-            topic: [],
-            comments: []
+            topic: {},
+            comments: false
         };
         this.upload_topic();
-        this.upload_comments();
     }
 
     upload_topic() {
@@ -24,6 +25,7 @@ class Comments extends React.Component {
                     this.setState({
                         topic: result
                     });
+                    this.upload_comments();
                 },
             )
     }
@@ -49,57 +51,24 @@ class Comments extends React.Component {
         }
     }
 
-    commentsFormChange(event) {
-        const target = event.target;
-
-        this.setState({
-            [target.name]: target.value
-        });
-    }
-
-    commentsFormSubmit(event) {
-        event.preventDefault();
-
-        fetch("/api/comments", {
-            method: 'POST',
-            headers: {
-                'Authorization': localStorage.getItem('token'),
-                'Content-Type': 'application/json;charset=utf-8',
-            },
-            body: JSON.stringify({
-                'text': this.state.comment,
-                'topic_id': this.topic_id,
-                'user_id': localStorage['user_id'],
-            })
-        })
-            .then(() => {
-                    this.setState({
-                        comment: '',
-                    });
-                    this.upload_comments();
-                    this.commentFormToggle();
-                }
-            )
-    }
-
-    commentFormToggle() {
-        this.setState(currentState => ({
-            openCommentInput: !currentState.openCommentInput
-        }));
-    }
-
     render() {
         return (
             <div className="Comments">
-                <h2 className="Comments__topic-title">{this.state.topic.name}</h2>
-                <div className="Comments__topic-text">
-                    {draw_comments(this.state.topic.user, this.state.topic.text)}
+                <div className="Comments__start-topic-block">
+                    <h2 className="Comments__topic-title">{this.state.topic.name}</h2>
+                    <div className="Comments__topic-text">
+                        {(this.state.topic.name !== undefined && this.state.topic.text !== undefined) &&
+                        <DrawComments user_id={this.state.topic.user_id}
+                                      text={this.state.topic.text}/>
+                        }
+                    </div>
                 </div>
                 {this.state.comments
                     ? <ul className="Comments__list-items">
                         {this.state.comments.map(comment => (
                             <li key={comment.id} className="Comments__item">
-                                {draw_comments(comment.user, comment.text)}
+                                <DrawComments user_id={comment.user}
+                                              text={comment.text}/>
                             </li>
                         ))}
                     </ul>
@@ -107,44 +76,21 @@ class Comments extends React.Component {
                         Комментарии скрыты от неавторизованных пользователей
                     </div>
                 }
-                {localStorage.getItem('username') && (
-                    <div className="Comments__create-comment-block">
-                        {this.state.openCommentInput ?
-                            <form className="Comments__form" id="comments_form"
-                                  onSubmit={(event) => this.commentsFormSubmit(event)}>
-                                <label htmlFor="password_field">Текст сообщения</label>
-                                <textarea name="comment"
-                                          className="Comments__input_textarea"
-                                          id="comment_field"
-                                          value={this.state.comment}
-                                          onChange={(event) => this.commentsFormChange(event)}
-                                          placeholder="Текст до 1000 знаков"/>
-                                <button className="Comments__submit-button" type="submit"
-                                        form="comments_form">Опубликовать сообщение</button>
-                            </form>
-                            : null}
-                        <h3 className={this.state.openCommentInput
-                            ? "Comments__form-title Comments__form-title_open"
-                            : "Comments__form-title"}
-                            onClick={() => this.commentFormToggle()}>
-                            {this.state.openCommentInput
-                                ? 'Скрыть'
-                                : 'Присоединиться к обсуждению'}</h3>
-                    </div>
-                )}
+                <CreateCommentBlock topic_id={this.topic_id}
+                                    upload_comments={() => this.upload_comments()}/>
             </div>
         );
     }
 }
 
-function draw_comments(user_id, text) {
+export function DrawComments(props) {
     return (
         <div className="Comments__item-text">
             <div className="Comments__item-author-block">
-                {user_id}
+                {props.user_id}
             </div>
             <div className="Comments__item-text-block">
-                {text}
+                {props.text}
             </div>
         </div>
     );

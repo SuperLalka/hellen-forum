@@ -1,6 +1,7 @@
 import React from 'react';
 import css from './SectionsList.css';
-import {Link} from "react-router-dom";
+
+import ObjectList from '../ObjectList/ObjectList';
 
 
 class SectionsList extends React.Component {
@@ -8,12 +9,9 @@ class SectionsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            error: null,
             categories: [],
-            sections: []
         };
         this.upload_category();
-        this.upload_sections();
     }
 
     upload_category() {
@@ -28,37 +26,16 @@ class SectionsList extends React.Component {
             )
     }
 
-    upload_sections() {
-        fetch("/api/sections")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        sections: result
-                    });
-                },
-            )
-    }
-
-    get_section(category) {
-        return (
-            <li key={category.id} className="SectionList__object">
-                <h2 className="SectionList__title">{category.name}</h2>
-                <ul className="SectionList__list-items">
-                    {this.state.sections.map(section => (section.category === category.id) ?
-                        <li key={section.id} className="SectionList__item">
-                            <Link to={{pathname: `/section/${section.id}`}}>{section.name}</Link>
-                        </li> : null )}
-                </ul>
-            </li>
-        )
-    }
-
     render() {
         return (
-            <ol className="SectionList">
-                { this.state.categories.map(category => this.get_section(category)) }
-            </ol>
+            <div className="SectionList">
+                {this.state.categories.map(category =>
+                    <ObjectList header_id={category.id}
+                                upload_header_url={`/api/category/${category.id}`}
+                                upload_objects_url={`/api/sections?category_id=${category.id}`}
+                                link_below={"/section/"}/>
+                )}
+            </div>
         );
     }
 }
