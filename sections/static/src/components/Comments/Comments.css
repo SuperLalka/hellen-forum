@@ -24,25 +24,6 @@
     text-align: center;
 }
 
-.Comments__item-text {
-    background-color: bisque;
-    border: 1px solid;
-    display: flex;
-    flex-flow: row;
-    margin: 10px;
-    min-height: 150px;
-}
-
-.Comments__item-author-block {
-    background: url(//www.strategium.ru/forum/uploads/set_resources_2/81210c75befc8e14b5cb873b0bc86bd7_profile_back.gif);
-    flex-basis: 200px;
-}
-
-.Comments__item-text-block {
-    flex: 1;
-    padding: 10px;
-}
-
 .Comments__list-items {
     list-style: none;
     padding: 0 20px;
