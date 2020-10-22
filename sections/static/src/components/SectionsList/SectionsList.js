@@ -9,6 +9,7 @@ class SectionsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isAuthorized: this.props.isAuthorized,
             categories: [],
         };
         this.upload_category();

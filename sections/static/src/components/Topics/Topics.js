@@ -12,7 +12,8 @@ class Topics extends React.Component {
         super(props);
         this.subsection_id = this.props.match.params.subsection_id;
         this.state = {
-            refresh_component: false
+            isAuthorized: this.props.isAuthorized,
+            refresh_component: false,
         }
     }
 
@@ -29,8 +30,10 @@ class Topics extends React.Component {
                         upload_header_url={`/api/subsection/${this.subsection_id}`}
                         upload_objects_url={`/api/topics?subsection_id=${this.subsection_id}`}
                         link_below={"/section/subsection/topics/"}/>
+                {this.state.isAuthorized && (
                 <CreateTopicForm subsection_id={this.subsection_id}
                                  refreshComponent={() => this.refreshComponent()}/>
+                )}
             </div>
         );
     }

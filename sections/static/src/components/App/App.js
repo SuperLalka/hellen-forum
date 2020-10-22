@@ -19,19 +19,28 @@ import {
 class App extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isAuthorized: !!localStorage['username']
+        }
+    }
+
+    isAuthorizedControl() {
+        this.setState({
+            isAuthorized: !!localStorage['username']
+        });
     }
 
     render() {
         return (
             <Router>
                 <div className="App">
-                    <Authentication />
+                    <Authentication isAuthorizedControl={() => this.isAuthorizedControl()}/>
                     <Switch>
-                        <Route path="/registration"  render={()=> <Registration user_profile={this.state.profile}/>}/>
-                        <Route path="/section/subsection/topics/:topic_id" component={Comments}/>
-                        <Route path="/section/subsection/:subsection_id" component={Topics}/>
-                        <Route path="/section/:section_id" component={SubSections}/>
-                        <Route exact path="/" component={SectionsList}/>
+                        <Route path="/registration" component={Registration}/>
+                        <Route path="/section/subsection/topics/:topic_id" render={(props) => <Comments isAuthorized={this.state.isAuthorized} {...props}/>}/>
+                        <Route path="/section/subsection/:subsection_id" render={(props) => <Topics isAuthorized={this.state.isAuthorized} {...props}/>}/>
+                        <Route path="/section/:section_id" render={(props) => <SubSections isAuthorized={this.state.isAuthorized} {...props}/>}/>
+                        <Route exact path="/" render={(props) => <SectionsList isAuthorized={this.state.isAuthorized} {...props}/>}/>
                     </Switch>
                 </div>
             </Router>

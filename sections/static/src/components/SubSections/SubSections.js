@@ -10,6 +10,9 @@ class SubSections extends React.Component {
     constructor(props) {
         super(props);
         this.section_id = this.props.match.params.section_id;
+        this.state = {
+            isAuthorized: this.props.isAuthorized,
+        }
     }
 
     render() {

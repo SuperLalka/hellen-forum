@@ -1,6 +1,6 @@
 import React from 'react';
-import css from './Authentication.css';
 import {Link} from "react-router-dom";
+import css from './Authentication.css';
 
 
 class Authentication extends React.Component {
@@ -8,6 +8,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isAuthorized: false,
             isOpen: false,
             errors: null,
         };
@@ -42,10 +43,13 @@ class Authentication extends React.Component {
             localStorage.setItem('user_id', result.user_id);
 
             this.setState({
+                isAuthorized: true,
                 isOpen: false,
                 username: '',
                 password: '',
             });
+            this.props.isAuthorizedControl();
+
         } else {
             this.setState({
                 errors: await response.json(),
@@ -77,11 +81,14 @@ class Authentication extends React.Component {
                     localStorage.removeItem('token');
                     localStorage.removeItem('username');
                     localStorage.removeItem('user_id');
+
                     this.setState({
+                        isAuthorized: false,
                         isOpen: false,
                         username: '',
                         password: '',
                     });
+                    this.props.isAuthorizedControl();
                 },
             )
     }
