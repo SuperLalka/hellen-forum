@@ -1,7 +1,14 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import Categories, Sections, Subsections, Topics, Comments
+from .models import (
+    Categories,
+    Comments,
+    ExtendingUser,
+    Sections,
+    Subsections,
+    Topics,
+)
 
 
 class CategoriesSerializer(serializers.ModelSerializer):
@@ -64,7 +71,21 @@ class UsersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'is_staff']
+        fields = ['id', 'username', 'is_staff', 'last_login']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        extending_user = ExtendingUser.objects.get(user=instance.id)
+        representation['avatar'] = ExtendingUserSerializer(extending_user).data['avatar']
+        return representation
+
+
+class ExtendingUserSerializer(serializers.ModelSerializer):
+    avatar = serializers.ImageField(required=False)
+
+    class Meta:
+        model = ExtendingUser
+        fields = ['avatar']
 
 
 class RegistrationSerializer(serializers.ModelSerializer):

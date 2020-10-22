@@ -1,3 +1,4 @@
+from django.conf import settings as django_settings
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -73,3 +74,11 @@ class Comments(models.Model):
         ordering = ['id']
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
+
+
+class ExtendingUser(models.Model):
+    user = models.OneToOneField(django_settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to="user_avatars")
+
+    def __str__(self):
+        return 'Extending info for user {}'.format(self.user.username)

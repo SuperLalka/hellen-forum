@@ -29,3 +29,8 @@ class TopicsAdmin(admin.ModelAdmin):
 @admin.register(models.Comments)
 class CommentsAdmin(admin.ModelAdmin):
     list_display = ['id', 'topic']
+
+
+@admin.register(models.ExtendingUser)
+class ExtendingUserAdmin(admin.ModelAdmin):
+    list_display = ['user', 'avatar']
