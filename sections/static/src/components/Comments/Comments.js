@@ -20,37 +20,37 @@ class Comments extends React.Component {
     }
 
     upload_topic() {
-        fetch(`/api/topics/${this.topic_id}`)
-            .then(res => res.json())
+        fetch(`/api/topics/${this.topic_id}/`)
+            .then(response => response.json())
             .then(
-                (result) => {
+                (response) => {
                     this.setState({
-                        topic: result
+                        topic: response,
                     });
                     this.upload_comments();
                 },
             )
     }
 
-    async upload_comments() {
-        let response = await fetch(`/api/comments?topic_id=${this.topic_id}`, {
+    upload_comments() {
+        fetch(`api/comments/?topic_id=${this.topic_id}`, {
             method: 'GET',
             headers: {
                 'Authorization': localStorage.getItem('token'),
             }
         })
-
-        if (response.ok) {
-            let result = await response.json();
-
-            this.setState({
-                comments: result
-            });
-        } else {
-            this.setState({
-                comments: false
-            });
-        }
+            .then(
+                (response) => {
+                    if (response.ok) {
+                        response.json()
+                            .then(response => this.setState({comments: response}))
+                    } else {
+                        this.setState({
+                            comments: false
+                        });
+                    }
+                },
+            )
     }
 
     render() {

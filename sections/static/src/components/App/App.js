@@ -24,7 +24,20 @@ class App extends React.Component {
         }
     }
 
-    isAuthorizedControl() {
+    isAuthorizedControl(result) {
+        if (result) {
+            localStorage.setItem('token', 'Token ' + result.token);
+            localStorage.setItem('username', result.username);
+            localStorage.setItem('user_id', result.user_id);
+        } else {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('user_id');
+        }
+        this.isAuthorized();
+    }
+
+    isAuthorized() {
         this.setState({
             isAuthorized: !!localStorage['username']
         });
@@ -34,13 +47,18 @@ class App extends React.Component {
         return (
             <Router>
                 <div className="App">
-                    <Authentication isAuthorizedControl={() => this.isAuthorizedControl()}/>
+                    <Authentication isAuthorizedControl={(result) => this.isAuthorizedControl(result)}
+                                    isAuthorized={this.state.isAuthorized}/>
                     <Switch>
-                        <Route path="/registration" component={Registration}/>
-                        <Route path="/section/subsection/topics/:topic_id" render={(props) => <Comments isAuthorized={this.state.isAuthorized} {...props}/>}/>
-                        <Route path="/section/subsection/:subsection_id" render={(props) => <Topics isAuthorized={this.state.isAuthorized} {...props}/>}/>
-                        <Route path="/section/:section_id" render={(props) => <SubSections isAuthorized={this.state.isAuthorized} {...props}/>}/>
-                        <Route exact path="/" render={(props) => <SectionsList isAuthorized={this.state.isAuthorized} {...props}/>}/>
+                        <Route path="/registration" key={'auth=' + this.state.isAuthorized} component={Registration}/>
+                        <Route path="/section/subsection/topics/:topic_id" key={'auth=' + this.state.isAuthorized}
+                               render={(props) => <Comments isAuthorized={this.state.isAuthorized} {...props}/>}/>
+                        <Route path="/section/subsection/:subsection_id" key={'auth=' + this.state.isAuthorized}
+                               render={(props) => <Topics isAuthorized={this.state.isAuthorized} {...props}/>}/>
+                        <Route path="/section/:section_id" key={'auth=' + this.state.isAuthorized}
+                               render={(props) => <SubSections isAuthorized={this.state.isAuthorized} {...props}/>}/>
+                        <Route exact path="/" key={'auth=' + this.state.isAuthorized}
+                               render={(props) => <SectionsList isAuthorized={this.state.isAuthorized} {...props}/>}/>
                     </Switch>
                 </div>
             </Router>

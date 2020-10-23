@@ -8,7 +8,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAuthorized: false,
+            isAuthorized: this.props.isAuthorized,
             isOpen: false,
             errors: null,
         };
@@ -38,17 +38,12 @@ class Authentication extends React.Component {
         if (response.ok) {
             let result = await response.json();
 
-            localStorage.setItem('token', 'Token ' + result.token);
-            localStorage.setItem('username', result.username);
-            localStorage.setItem('user_id', result.user_id);
-
+            this.props.isAuthorizedControl(result);
             this.setState({
-                isAuthorized: true,
                 isOpen: false,
                 username: '',
                 password: '',
             });
-            this.props.isAuthorizedControl();
 
         } else {
             this.setState({
@@ -78,17 +73,12 @@ class Authentication extends React.Component {
             }
         })
             .then(() => {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('username');
-                    localStorage.removeItem('user_id');
-
+                    this.props.isAuthorizedControl(null);
                     this.setState({
-                        isAuthorized: false,
                         isOpen: false,
                         username: '',
                         password: '',
                     });
-                    this.props.isAuthorizedControl();
                 },
             )
     }

@@ -16,7 +16,7 @@ class SectionsList extends React.Component {
     }
 
     upload_category() {
-        fetch("/api/categories")
+        fetch("/api/categories/")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -32,8 +32,8 @@ class SectionsList extends React.Component {
             <div className="SectionList">
                 {this.state.categories.map(category =>
                     <ObjectList header_id={category.id}
-                                upload_header_url={`/api/categories/${category.id}`}
-                                upload_objects_url={`/api/sections?category_id=${category.id}`}
+                                upload_header_url={`/api/categories/${category.id}/`}
+                                upload_objects_url={`/api/sections/?category_id=${category.id}`}
                                 link_below={"/section/"}/>
                 )}
             </div>
