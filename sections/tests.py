@@ -17,12 +17,12 @@ class CategoriesApiTestCase(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.test_board = CategoriesFactory(name='test')
+        self.test_category = CategoriesFactory(name='test')
 
     def test_get_category(self):
-        response = self.client.get(f'/api/category/{self.test_board.id}')
+        response = self.client.get(f'/api/category/{self.test_category.id}')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {'id': self.test_board.id, 'name': 'test'})
+        self.assertEqual(response.json(), {'id': self.test_category.id, 'name': 'test'})
 
     def test_get_categories_list(self):
         CategoriesFactory(name='test_2')
@@ -36,16 +36,16 @@ class CategoriesApiTestCase(TestCase):
         self.assertEqual(response.json(), {"id": 2, "name": "new_test"})
 
     def test_update_category(self):
-        response = self.client.patch(f'/api/category/{self.test_board.id}',
-                                     {'id': self.test_board.id, 'name': 'new_name'})
+        response = self.client.patch(f'/api/category/{self.test_category.id}',
+                                     {'id': self.test_category.id, 'name': 'new_name'})
         self.assertEqual(response.status_code, 200)
-        self.test_board.refresh_from_db()
-        self.assertEqual(self.test_board.name, 'new_name')
+        self.test_category.refresh_from_db()
+        self.assertEqual(self.test_category.name, 'new_name')
 
     def test_delete_category(self):
-        response = self.client.delete(f'/api/category/{self.test_board.id}')
+        response = self.client.delete(f'/api/category/{self.test_category.id}')
         self.assertEqual(response.status_code, 204)
-        self.assertFalse(models.Categories.objects.filter(id=self.test_board.id).exists())
+        self.assertFalse(models.Categories.objects.filter(id=self.test_category.id).exists())
 
 
 class SectionsApiTestCase(TestCase):
@@ -125,7 +125,7 @@ class SubSectionsApiTestCase(TestCase):
         response = self.client.patch(f'/api/subsection/{self.test_subsection.id}',
                                      {'id': self.test_subsection.id, 'name': 'new_name'})
         self.assertEqual(response.status_code, 200)
-        self.test_section.refresh_from_db()
+        self.test_subsection.refresh_from_db()
         self.assertEqual(self.test_subsection.name, 'new_name')
 
     def test_delete_subsection(self):
@@ -177,7 +177,7 @@ class TopicsApiTestCase(TestCase):
         response = self.client.patch(f'/api/topic/{self.test_topic.id}',
                                      {'id': self.test_topic.id, 'name': 'new_name'})
         self.assertEqual(response.status_code, 200)
-        self.test_subsection.refresh_from_db()
+        self.test_topic.refresh_from_db()
         self.assertEqual(self.test_topic.name, 'new_name')
 
     def test_delete_topic(self):
@@ -189,12 +189,12 @@ class TopicsApiTestCase(TestCase):
 class CommentsApiTestCase(TestCase):
 
     def setUp(self):
-        self.test_comment = CommentsFactory(text='test_comment_text')
-        self.test_topic = TopicsFactory(name='test')
         self.test_user = UsersFactory(username='test')
         self.test_user_token = TokensFactory(user=self.test_user)
-        client = APIClient()
-        client.credentials(Authorization='Token ' + self.test_user_token.key)
+        self.test_comment = CommentsFactory(text='test_comment_text', user=self.test_user)
+        self.test_topic = TopicsFactory(name='test')
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.test_user)
 
     def test_get_comment(self):
         response = self.client.get(f'/api/comment/{self.test_comment.id}')
@@ -203,8 +203,8 @@ class CommentsApiTestCase(TestCase):
                                            'topic_id': self.test_comment.topic_id,
                                            'topic': self.test_comment.topic_id,
                                            'text': 'test_comment_text',
-                                           'user': None,
-                                           'user_id': None})
+                                           'user': self.test_user.id,
+                                           'user_id': self.test_user.id})
 
     def test_get_comments_list(self):
         CommentsFactory(text='test_comment_text_2')
@@ -226,10 +226,10 @@ class CommentsApiTestCase(TestCase):
 
     def test_update_comment(self):
         response = self.client.patch(f'/api/comment/{self.test_comment.id}',
-                                     {'id': self.test_topic.id, 'text': 'new_text'})
+                                     {'id': self.test_comment.id, 'text': 'new_text'})
         self.assertEqual(response.status_code, 200)
-        self.test_topic.refresh_from_db()
-        self.assertEqual(self.test_topic.text, 'new_text')
+        self.test_comment.refresh_from_db()
+        self.assertEqual(self.test_comment.text, 'new_text')
 
     def test_delete_comment(self):
         response = self.client.delete(f'/api/comment/{self.test_comment.id}')
