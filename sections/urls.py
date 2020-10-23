@@ -6,13 +6,11 @@ from sections import views
 
 
 routerAPI = DefaultRouter()
-routerAPI.register(r'categories', views.CategoryViewSet)
-routerAPI.register(r'sections', views.SectionViewSet)
-routerAPI.register(r'subsections', views.SubsectionViewSet)
-routerAPI.register(r'topics', views.TopicViewSet)
-routerAPI.register(r'comments', views.CommentViewSet)
-routerAPI.register(r'sections', views.SectionViewSet)
-
+routerAPI.register(r'categories', views.CategoryViewSet, basename='categories')
+routerAPI.register(r'sections', views.SectionViewSet, basename='sections')
+routerAPI.register(r'subsections', views.SubsectionViewSet, basename='subsections')
+routerAPI.register(r'topics', views.TopicViewSet, basename='topics')
+routerAPI.register(r'comments', views.CommentViewSet, basename='comments')
 
 users = [
     url(r'^authorization$', views.Authorization.as_view()),
