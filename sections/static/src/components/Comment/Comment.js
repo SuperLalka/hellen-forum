@@ -14,7 +14,7 @@ class Comment extends React.Component {
     }
 
     upload_user_info() {
-        fetch(`/api/user/${this.props.user_id}`)
+        fetch(`/users/user/${this.props.user_id}`)
             .then(res => res.json())
             .then(
                 (result) => {

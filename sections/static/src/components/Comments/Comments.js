@@ -20,7 +20,7 @@ class Comments extends React.Component {
     }
 
     upload_topic() {
-        fetch(`/api/topic/${this.topic_id}`)
+        fetch(`/api/topics/${this.topic_id}`)
             .then(res => res.json())
             .then(
                 (result) => {

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from rest_framework import filters, generics
+from rest_framework import filters, generics, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.decorators import api_view, permission_classes
@@ -24,63 +24,37 @@ def index(request):
     return render(request, 'index.html')
 
 
-class CategoriesList(generics.ListCreateAPIView):
-    queryset = Categories.objects.all()
-    serializer_class = CategoriesSerializer
-
-
-class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Categories.objects.all()
     serializer_class = CategoriesSerializer
     lookup_field = 'id'
 
 
-class SectionsList(generics.ListCreateAPIView):
+class SectionViewSet(viewsets.ModelViewSet):
     queryset = Sections.objects.all()
     serializer_class = SectionsSerializer
     filterset_fields = ['category_id']
-
-
-class SectionDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Sections.objects.all()
-    serializer_class = SectionsSerializer
     lookup_field = 'id'
 
 
-class SubsectionsList(generics.ListCreateAPIView):
+class SubsectionViewSet(viewsets.ModelViewSet):
     queryset = Subsections.objects.all()
     serializer_class = SubsectionsSerializer
     filterset_fields = ['section_id']
-
-
-class SubsectionDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Subsections.objects.all()
-    serializer_class = SubsectionsSerializer
     lookup_field = 'id'
 
 
-class TopicsList(generics.ListCreateAPIView):
+class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topics.objects.all()
     serializer_class = TopicsSerializer
     filterset_fields = ['subsection_id']
-
-
-class TopicDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Topics.objects.all()
-    serializer_class = TopicsSerializer
     lookup_field = 'id'
 
 
-class CommentsList(generics.ListCreateAPIView):
+class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comments.objects.all()
     serializer_class = CommentsSerializer
     filterset_fields = ['topic_id']
-    permission_classes = [IsAuthenticated]
-
-
-class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Comments.objects.all()
-    serializer_class = CommentsSerializer
     lookup_field = 'id'
     permission_classes = [IsAuthenticated]
 

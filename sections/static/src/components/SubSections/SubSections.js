@@ -18,7 +18,7 @@ class SubSections extends React.Component {
     render() {
         return (
             <ObjectList header_id={this.section_id}
-                        upload_header_url={`/api/section/${this.section_id}`}
+                        upload_header_url={`/api/sections/${this.section_id}`}
                         upload_objects_url={`/api/subsections?section_id=${this.section_id}`}
                         link_below={"/section/subsection/"}/>
         );

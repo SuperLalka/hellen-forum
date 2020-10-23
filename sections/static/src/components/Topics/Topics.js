@@ -27,7 +27,7 @@ class Topics extends React.Component {
         return (
             <div className="Topics__object">
                 <ObjectList header_id={this.subsection_id}
-                        upload_header_url={`/api/subsection/${this.subsection_id}`}
+                        upload_header_url={`/api/subsections/${this.subsection_id}`}
                         upload_objects_url={`/api/topics?subsection_id=${this.subsection_id}`}
                         link_below={"/section/subsection/topics/"}/>
                 {this.state.isAuthorized && (
